@@ -1,8 +1,8 @@
 # Zero-Day Attack Detection Through Deep Anomaly Learning
 
-Welcome to my repository! This project focuses on designing and implementing a Deep Learning-based Anomaly Detection system to identify Zero-Day network attacks.
+This project focuses on designing and implementing a Deep Learning-based Anomaly Detection system to identify Zero-Day network attacks.
 
-Traditional Network Intrusion Detection Systems (NIDS) usually rely on comparing incoming traffic against a database of known malicious signatures. The obvious flaw here is that they are completely blind to zero-day threats—attacks exploiting undocumented vulnerabilities that don't have a signature yet.
+Traditional Network Intrusion Detection Systems (NIDS) usually rely on comparing incoming traffic against a database of known malicious signatures. The flaw here is that they are completely blind to zero-day threats—attacks exploiting undocumented vulnerabilities that don't have a signature yet.
 
 To solve this, I flipped the approach: instead of teaching the model what an attack looks like, the system is trained exclusively on "benign" network traffic to learn normal behavior. Any traffic flow that significantly deviates from this learned normality is isolated and flagged as a potential threat.
 
@@ -10,7 +10,7 @@ To solve this, I flipped the approach: instead of teaching the model what an att
 
 The model was trained and evaluated on the **UNSW-NB15** dataset, which contains over 2.5 million records. It includes normal traffic alongside various attack categories like exploits, worms, and shellcode, making it a great playground for simulating zero-day scenarios.
 
-Working with this dataset presented two massive structural challenges:
+Working with this dataset presented two structural challenges:
 
 * 
 **Class Imbalance:** The volume of benign traffic absolutely dwarfs the individual attack categories.
