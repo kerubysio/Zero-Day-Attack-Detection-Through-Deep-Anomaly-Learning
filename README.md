@@ -1,7 +1,3 @@
-Here is a README drafted in English, keeping the tone natural, professional, and slightly conversational—perfect for a student showcasing their work on GitHub.
-
----
-
 # Zero-Day Attack Detection Through Deep Anomaly Learning
 
 Welcome to my repository! This project focuses on designing and implementing a Deep Learning-based Anomaly Detection system to identify Zero-Day network attacks.
