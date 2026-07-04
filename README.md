@@ -12,12 +12,10 @@ The model was trained and evaluated on the **UNSW-NB15** dataset, which contains
 
 Working with this dataset presented two structural challenges:
 
-* 
-**Class Imbalance:** The volume of benign traffic absolutely dwarfs the individual attack categories.
+* **Class Imbalance:** The volume of benign traffic absolutely dwarfs the individual attack categories.
 
 
-* 
-**Class Overlap:** Different types of attacks blend and overlap almost perfectly with normal traffic in the multidimensional feature space. This makes it incredibly hard to draw clear decision boundaries without exploding the false alarm rate.
+* **Class Overlap:** Different types of attacks blend and overlap almost perfectly with normal traffic in the multidimensional feature space. This makes it incredibly hard to draw clear decision boundaries without exploding the false alarm rate.
 
 
 
@@ -25,16 +23,13 @@ Working with this dataset presented two structural challenges:
 
 Raw network data is noisy and heavily skewed. To ensure the neural network could learn effectively, I built a robust preprocessing pipeline:
 
-* 
-**Categorical Encoding:** Text-based features like protocols (`proto`), services (`service`), and connection states (`state`) were converted into numerical tensors using One-Hot Encoding.
+* **Categorical Encoding:** Text-based features like protocols (`proto`), services (`service`), and connection states (`state`) were converted into numerical tensors using One-Hot Encoding.
 
 
-* 
-**Outlier Management:** Network traffic has heavy-tailed distributions (e.g., transferred bytes ranging from a few digits to gigabytes). I applied a logarithmic compression (`numpy.log1p`) to dampen outliers while preserving variance on smaller values.
+* **Outlier Management:** Network traffic has heavy-tailed distributions (e.g., transferred bytes ranging from a few digits to gigabytes). I applied a logarithmic compression (`numpy.log1p`) to dampen outliers while preserving variance on smaller values.
 
 
-* 
-**Scaling:** After the log transformation, the data was forced into a [0,1] range using a `MinMaxScaler`. Crucially, this scaler was fitted *only* on the benign traffic to respect the semi-supervised paradigm.
+* **Scaling:** After the log transformation, the data was forced into a [0,1] range using a `MinMaxScaler`. Crucially, this scaler was fitted *only* on the benign traffic to respect the semi-supervised paradigm.
 
 
 
@@ -42,16 +37,13 @@ Raw network data is noisy and heavily skewed. To ensure the neural network could
 
 The core of the detection engine is a semi-supervised **Autoencoder** built with PyTorch.
 
-* 
-**The Encoder:** Uses `Linear` layers, `ReLU` activations, `BatchNorm1d`, and a 20% `Dropout` to progressively compress the input data down to a restricted 32-dimensional bottleneck. This forces the network to discard noise and memorize only the latent patterns of benign traffic.
+* **The Encoder:** Uses `Linear` layers, `ReLU` activations, `BatchNorm1d`, and a 20% `Dropout` to progressively compress the input data down to a restricted 32-dimensional bottleneck. This forces the network to discard noise and memorize only the latent patterns of benign traffic.
 
 
-* 
-**The Decoder:** A mirrored module that takes this compressed vector and attempts to reconstruct the original features.
+* **The Decoder:** A mirrored module that takes this compressed vector and attempts to reconstruct the original features.
 
 
-* 
-**Detection Logic:** During inference, the model calculates the Mean Squared Error (MSE) between the real input and its reconstruction. If the MSE exceeds a dynamic threshold (set at the 99th percentile of the training errors), the packet is flagged as a Zero-Day attack.
+* **Detection Logic:** During inference, the model calculates the Mean Squared Error (MSE) between the real input and its reconstruction. If the MSE exceeds a dynamic threshold (set at the 99th percentile of the training errors), the packet is flagged as a Zero-Day attack.
 
 
 
@@ -83,13 +75,10 @@ The system was engineered to meet strict Key Performance Indicators (KPIs). Here
 
 This project serves as a solid baseline, but there is room for growth. Future iterations might explore:
 
-* 
-**Federated Learning:** To train models locally on distributed nodes (like corporate networks or IoT devices) without exposing raw, sensitive traffic data to a central server.
+* **Federated Learning:** To train models locally on distributed nodes (like corporate networks or IoT devices) without exposing raw, sensitive traffic data to a central server.
 
 
-* 
-**Online Learning:** Implementing continual learning mechanisms to periodically update the model with new benign examples, helping it adapt to evolving network behaviors (concept drift).
+* **Online Learning:** Implementing continual learning mechanisms to periodically update the model with new benign examples, helping it adapt to evolving network behaviors (concept drift).
 
 
-* 
-**Quantum Machine Learning:** Exploring Quantum Autoencoders to map the latent space into an exponentially larger number of states using qubits, potentially improving the separation of overlapping classes.
+* **Quantum Machine Learning:** Exploring Quantum Autoencoders to map the latent space into an exponentially larger number of states using qubits, potentially improving the separation of overlapping classes.
