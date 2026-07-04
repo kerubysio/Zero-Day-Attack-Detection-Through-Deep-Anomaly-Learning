@@ -49,23 +49,7 @@ The core of the detection engine is a semi-supervised **Autoencoder** built with
 
 ## Results & KPIs
 
-The system was engineered to meet strict Key Performance Indicators (KPIs). Here is how the optimized model performed on the test set:
-
-| Metric | Achieved Value | Project KPI Target |
-| --- | --- | --- |
-| **Area Under the Curve (AUC)** | 0.9445 
-
- | > 0.90 
-
- |
-| **False Alarm Rate (FAR)** | 4.31% 
-
-| < 5% 
-
-|
-| **Detection Rate (DR)** | 74.23% 
-
-| > 95% 
+The system was engineered to meet strict Key Performance Indicators (KPIs). 
 
 *Note on the Detection Rate:* While the AUC and FAR successfully hit the targets, the DR fell short of the 95% goal. Mathematical analysis of the ROC curve revealed that due to the severe class overlap in the UNSW-NB15 dataset, hitting a 95% DR while keeping false alarms under 5% requires a theoretical AUC of at least 0.95.
 
